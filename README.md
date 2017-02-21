@@ -21,8 +21,8 @@ GTM>
 
 # Build
 
-* Download PIP v0.2 (.vmdk)[https://sourceforge.net/projects/pip/files/PIP/V0.2/]
-* Mount it `sudo guestmount -a ~/Downloads/ubuntu_8.04_jeos_pip.vmdk -i --ro /mnt/pip`
+* Download PIP v0.2 [VMDK](https://sourceforge.net/projects/pip/files/PIP/V0.2/)
+* Mount it `sudo guestmount -a ubuntu_8.04_jeos_pip.vmdk -i --ro /mnt/pip`
 * Create tarball `cd /mnt/pip; tar czpf $OLDPWD/pip.tar usr/lib/fis-gtm/ home/pip/`
 * Build image `docker build -t fopina/fis-pip .`
 
