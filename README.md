@@ -1,31 +1,14 @@
-Docker container with FIS PIP
-
-# Usage
+This is a branch with a Dockerfile ready to build and tinker with MTM code.
 
 ```
-$ docker run -ti fopina/fis-pip
-pip@933687555dbc:~$ cd pip_V02/
-pip@933687555dbc:~/pip_V02$ ./dm
-
-GTM>w $ZV
-GT.M V5.4-000 Linux x86
-
-GTM>zwr ^TBXBUILD
-^TBXBUILD(0)="Fixpack|Corporate_Solutions_Dev|FrameWorkInstall|40964|||0"
-^TBXBUILD(10)="PIP Framework|SCA Products|Profile_Framework_v30|PRF_FWK_v30_025|kbhaskar|61580|0"
-^TBXBUILD(20)="PIP Supplement||||||0"
-
-GTM>
-
+$ docker build -t fis-pip-mtm .
+$ docker run -ti fis-pip-mtm
+root@228c942e3634:/# cd home/pip/pip_V02/mtm_V2.4.5/
+root@228c942e3634:/home/pip/pip_V02/mtm_V2.4.5# make
+rm -f *.o
+rm -f mtm
+...
+/usr/bin/gcc mtmcntrl.o mtmclnt.o mtmmain.o mtmserver.o mtmcomm.o mtmutils.o utils.o sca_wrapper.o socket_utils.o alarm_utils.o msg_utils.o -o mtm -m32 -lm
+chmod 775 mtm
+make[1]: Leaving directory '/home/pip/pip_V02/mtm_V2.4.5'
 ```
-
-# Build
-
-* Download PIP v0.2 [VMDK](https://sourceforge.net/projects/pip/files/PIP/V0.2/)
-* Mount it `sudo guestmount -a ubuntu_8.04_jeos_pip.vmdk -i --ro /mnt/pip`
-* Create tarball `cd /mnt/pip; tar czpf $OLDPWD/pip.tar usr/lib/fis-gtm/ home/pip/`
-* Build image `docker build -t fopina/fis-pip .`
-
-# TODO
-
-* Get MTM working (using `--sysctl "kernel.msgmnb=65536000" --sysctl "kernel.msgmni=512" --sysctl "kernel.msgmax=1048700"` as is in PIP VM */etc/sysctl.conf*)
