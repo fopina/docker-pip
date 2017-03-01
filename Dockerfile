@@ -20,4 +20,5 @@ RUN useradd pip -m -u 61781 -g 100 && \
 	apt-get autoclean && apt-get clean && \
 	rm -rf /var/lib/apt/lists/*
 
+EXPOSE 61315
 CMD /entrypoint.sh
