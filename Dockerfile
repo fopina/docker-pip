@@ -1,12 +1,12 @@
 FROM ubuntu:16.04
 
+# unpack PIP first for cached layers
 COPY pip.tgz /pip.tgz
-COPY entrypoint.sh /entrypoint.sh
+RUN useradd pip -m -u 61781 -g 100 && \
+	tar xpf pip.tgz && rm pip.tgz
 
 ENV LOCALE en_US.UTF-8
-RUN useradd pip -m -u 61781 -g 100 && \
-	tar xpf pip.tgz && rm pip.tgz && \
-	dpkg --add-architecture i386 && \
+RUN	dpkg --add-architecture i386 && \
 	apt-get update && \
 	apt-get -y install --no-install-recommends libc6:i386 libncurses5:i386 \
 											   libstdc++6:i386 vim-tiny netbase \
@@ -21,4 +21,6 @@ RUN useradd pip -m -u 61781 -g 100 && \
 	rm -rf /var/lib/apt/lists/*
 
 EXPOSE 61315
+
+COPY entrypoint.sh /entrypoint.sh
 CMD /entrypoint.sh
